@@ -1,0 +1,38 @@
+package ch.wesr.projectz.projapi.web;
+
+import ch.wesr.projectz.projapi.domain.Project;
+import ch.wesr.projectz.projapi.domain.User;
+import ch.wesr.projectz.projapi.storage.DataRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
+public class ProjectResource {
+
+    @Autowired
+    private DataRepository repository;
+
+    @GetMapping("/projects/createSingle")
+    @ResponseBody
+    public Project createSingleProject() {
+        Project project = new Project("projectz", "heimliches Projekt", "2da3-adf2K-12KT", new User("René", "Weishaupt"));
+        repository.addProject(project);
+        return project;
+    }
+
+
+
+    @GetMapping("/projects/all")
+    @ResponseBody
+    public List<Project> getAllProjects() {
+      return repository.getProjectList();
+    }
+
+
+
+}

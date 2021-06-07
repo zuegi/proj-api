@@ -1,0 +1,14 @@
+**/target/
+**/.apt_generated/
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings/
+**/bin/
+**/gensrc
+
+**/.idea/**
+file-store/**
+**/mvnw/**
+mvnw.cmd
+proj-api.iml
