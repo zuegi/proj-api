@@ -6,9 +6,9 @@ import ch.wesr.projectz.projapi.storage.DataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -16,6 +16,22 @@ public class ProjectResource {
 
     @Autowired
     private DataRepository repository;
+
+
+    @GetMapping("/projects/content/{content}")
+    @ResponseBody
+    public String setContent(@PathVariable String content) {
+        repository.addContent(content);
+       return repository.getContent();
+
+    }
+
+    @GetMapping("/projects/content")
+    @ResponseBody
+    public String getContent() {
+        return repository.getContent();
+
+    }
 
     @GetMapping("/projects/createSingle")
     @ResponseBody
