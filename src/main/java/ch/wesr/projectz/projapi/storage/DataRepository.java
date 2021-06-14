@@ -16,21 +16,22 @@ public class DataRepository {
     @Autowired
     private EmbeddedStorageManager storageManager;
 
-    @Autowired
-    private DataRoot dataRoot;
 
-    public void addProject(Project project) {
+    public List<Project> addProject(Project project) {
         DataRoot dataRoot = (DataRoot) storageManager.root();
         List<Project> projectList = dataRoot.getProjectList();
         projectList.add(project);
         storageManager.storeAll(projectList);
-        storageManager.storeRoot();
-        storageManager.storeAll(dataRoot);
+        log.info("storageManager");
+        return dataRoot.getProjectList();
     }
 
     public List<Project> getProjectList() {
-//        DataRoot dataRoot = (DataRoot) storageManager.root();
-        return dataRoot.getProjectList();
+        DataRoot dataRoot = (DataRoot) storageManager.root();
+        log.info("storageManager: " + storageManager.toString());
+        List<Project> projects = dataRoot.getProjectList();
+        projects.forEach(System.out::println);
+        return projects;
     }
 
     @PreDestroy
@@ -40,15 +41,15 @@ public class DataRepository {
     }
 
     public String getContent() {
-//        DataRoot dataRoot = (DataRoot) storageManager.root();
+        DataRoot dataRoot = (DataRoot) storageManager.root();
         return dataRoot.getContent();
     }
 
     public void addContent(String content) {
-//        DataRoot dataRoot = (DataRoot) storageManager.root();
-        log.info("repo location: " +dataRoot.getLocation());
+        DataRoot dataRoot = (DataRoot) storageManager.root();
+        log.info("repo location: " + dataRoot.getLocation());
         dataRoot.setContent(content);
-        log.info("dataRoot content: " +dataRoot.getContent());
+        log.info("dataRoot content: " + dataRoot.getContent());
         storageManager.storeRoot();
     }
 }

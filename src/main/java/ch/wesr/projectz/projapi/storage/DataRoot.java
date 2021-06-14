@@ -17,13 +17,12 @@ import java.util.List;
 @ToString
 public class DataRoot {
 
-    // final ignoriert transient?
-    private final List<Project> projectList = new ArrayList<>();
+    private List<Project> projectList =new ArrayList<>();
     private String content;
     private String location;
 
     public void printAllMyProjects() {
         log.info("Printing all my projects:");
-        this.getProjectList().forEach(System.out::println);
+        this.getProjectList().forEach(p -> log.info("\t" +p.toString()));
     }
 }

@@ -11,6 +11,7 @@ import one.microstream.storage.types.EmbeddedStorageManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 @Slf4j
 @Configuration
@@ -19,7 +20,6 @@ public class MicrostreamConfig {
     @Value("${microstream.store.location}")
     String location;
 
-    private DataRoot dataRoot;
 
     @Bean
     public EmbeddedStorageManager storageManager() {
@@ -33,28 +33,31 @@ public class MicrostreamConfig {
 //                .start();
 
         NioFileSystem fileSystem = NioFileSystem.New();
-        EmbeddedStorageManager storageManager = EmbeddedStorage.start(fileSystem.ensureDirectoryPath(location));
+        final EmbeddedStorageManager storageManager = EmbeddedStorage.start(fileSystem.ensureDirectoryPath(location));
+
         if (storageManager.root() == null) {
             log.info("No database found  - creating a new one");
-            dataRoot = new DataRoot();
-            dataRoot.getProjectList().add(new Project("return of the avatar", "Avator", "123d4-sdfaf-adf2K", new User("Ang", "Avatar")));
+            DataRoot dataRoot = new DataRoot();
             storageManager.setRoot(dataRoot);
+            dataRoot.getProjectList().add(new Project("return of the avatar", "Avator", "123d4-sdfaf-adf2K", new User("Ang", "Avatar")));
+            dataRoot.getProjectList().add(new Project("return of the jedi", "Jedi", "123d4-jedi-adf2K", new User("Master", "Jedi")));
             dataRoot.setLocation(location);
+            dataRoot.setContent("Avatar");
             storageManager.storeRoot();
         } else {
-            log.info("Database found");
-            dataRoot = (DataRoot) storageManager.root();
-            System.out.println("location: " +dataRoot.getLocation());
-            System.out.println("content: " +dataRoot.getContent());
-            dataRoot.printAllMyProjects();
+            DataRoot dataRoot = (DataRoot) storageManager.root();
+            if (dataRoot != null) {
+                log.info("Database found");
+                log.info("location: " + dataRoot.getLocation());
+                log.info("content: " + dataRoot.getContent());
+                dataRoot.printAllMyProjects();
+            } else {
+                log.info("Where is my database?");
+            }
         }
-
+        log.info("storageManager: " + storageManager.toString());
         return storageManager;
     }
 
-    @Bean
-    DataRoot dataRoot() {
-        return dataRoot;
-    }
 }
 

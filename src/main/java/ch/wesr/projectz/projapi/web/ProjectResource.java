@@ -35,10 +35,10 @@ public class ProjectResource {
 
     @GetMapping("/projects/createSingle")
     @ResponseBody
-    public Project createSingleProject() {
+    public List<Project> createSingleProject() {
         Project project = new Project("projectz", "heimliches Projekt", "2da3-adf2K-12KT", new User("René", "Weishaupt"));
         repository.addProject(project);
-        return project;
+        return repository.getProjectList();
     }
 
 
