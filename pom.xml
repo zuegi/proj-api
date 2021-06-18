@@ -67,6 +67,19 @@
             <artifactId>storage.embedded.configuration</artifactId>
             <version>${microstream.version}</version>
         </dependency>
+        <!-- sql file system -->
+        <dependency>
+            <groupId>one.microstream</groupId>
+            <artifactId>filesystem.sql</artifactId>
+            <version>04.01.00-MS-GA</version>
+        </dependency>
+        <!-- driver of your choice -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.21</version>
+        </dependency>
+
     </dependencies>
 
     <build>

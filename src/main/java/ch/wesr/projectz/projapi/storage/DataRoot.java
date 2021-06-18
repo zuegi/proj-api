@@ -17,7 +17,7 @@ import java.util.List;
 @ToString
 public class DataRoot {
 
-    private List<Project> projectList =new ArrayList<>();
+    private List<Project> projectList = new ArrayList<>();
     private String content;
     private String location;
 

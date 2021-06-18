@@ -16,12 +16,12 @@ public class DataRepository {
     @Autowired
     private EmbeddedStorageManager storageManager;
 
-
     public List<Project> addProject(Project project) {
         DataRoot dataRoot = (DataRoot) storageManager.root();
         List<Project> projectList = dataRoot.getProjectList();
         projectList.add(project);
-        storageManager.storeAll(projectList);
+//        storageManager.storeAll(projectList);
+        storageManager.storeRoot();
         log.info("storageManager");
         return dataRoot.getProjectList();
     }

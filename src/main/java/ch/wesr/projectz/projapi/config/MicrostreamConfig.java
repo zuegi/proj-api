@@ -6,12 +6,12 @@ import ch.wesr.projectz.projapi.domain.User;
 import ch.wesr.projectz.projapi.storage.DataRoot;
 import lombok.extern.slf4j.Slf4j;
 import one.microstream.afs.nio.NioFileSystem;
+import one.microstream.reflect.ClassLoaderProvider;
 import one.microstream.storage.types.EmbeddedStorage;
 import one.microstream.storage.types.EmbeddedStorageManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 
 @Slf4j
 @Configuration
@@ -20,20 +20,17 @@ public class MicrostreamConfig {
     @Value("${microstream.store.location}")
     String location;
 
+    private DataRoot dataRoot;
 
     @Bean
     public EmbeddedStorageManager storageManager() {
 
-//        EmbeddedStorageManager storageManager = EmbeddedStorage.Foundation(Paths.get(location))
-//                .onConnectionFoundation(cf ->
-//                        cf.setClassLoaderProvider(ClassLoaderProvider.New(
-//                                Thread.currentThread().getContextClassLoader()
-//                        ))
-//                )
-//                .start();
-
         NioFileSystem fileSystem = NioFileSystem.New();
-        final EmbeddedStorageManager storageManager = EmbeddedStorage.start(fileSystem.ensureDirectoryPath(location));
+        EmbeddedStorageManager storageManager = EmbeddedStorage.Foundation(fileSystem.ensureDirectoryPath(location))
+                .onConnectionFoundation(cf -> cf.setClassLoaderProvider(ClassLoaderProvider.New(
+                        Thread.currentThread().getContextClassLoader())))
+                .start();
+
 
         if (storageManager.root() == null) {
             log.info("No database found  - creating a new one");
@@ -58,6 +55,5 @@ public class MicrostreamConfig {
         log.info("storageManager: " + storageManager.toString());
         return storageManager;
     }
-
 }
 
