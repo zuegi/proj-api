@@ -16,18 +16,17 @@ public class DataRepository {
     @Autowired
     private EmbeddedStorageManager storageManager;
 
+    @Autowired
+    private DataRoot dataRoot;
+
     public List<Project> addProject(Project project) {
-        DataRoot dataRoot = (DataRoot) storageManager.root();
         List<Project> projectList = dataRoot.getProjectList();
         projectList.add(project);
-//        storageManager.storeAll(projectList);
-        storageManager.storeRoot();
-        log.info("storageManager");
+        storageManager.store(dataRoot.getProjectList());
         return dataRoot.getProjectList();
     }
 
     public List<Project> getProjectList() {
-        DataRoot dataRoot = (DataRoot) storageManager.root();
         log.info("storageManager: " + storageManager.toString());
         List<Project> projects = dataRoot.getProjectList();
         projects.forEach(System.out::println);
@@ -41,12 +40,10 @@ public class DataRepository {
     }
 
     public String getContent() {
-        DataRoot dataRoot = (DataRoot) storageManager.root();
         return dataRoot.getContent();
     }
 
     public void addContent(String content) {
-        DataRoot dataRoot = (DataRoot) storageManager.root();
         log.info("repo location: " + dataRoot.getLocation());
         dataRoot.setContent(content);
         log.info("dataRoot content: " + dataRoot.getContent());

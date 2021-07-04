@@ -20,8 +20,6 @@ public class MicrostreamConfig {
     @Value("${microstream.store.location}")
     String location;
 
-    private DataRoot dataRoot;
-
     @Bean
     public EmbeddedStorageManager storageManager() {
 
@@ -41,19 +39,14 @@ public class MicrostreamConfig {
             dataRoot.setLocation(location);
             dataRoot.setContent("Avatar");
             storageManager.storeRoot();
-        } else {
-            DataRoot dataRoot = (DataRoot) storageManager.root();
-            if (dataRoot != null) {
-                log.info("Database found");
-                log.info("location: " + dataRoot.getLocation());
-                log.info("content: " + dataRoot.getContent());
-                dataRoot.printAllMyProjects();
-            } else {
-                log.info("Where is my database?");
-            }
         }
-        log.info("storageManager: " + storageManager.toString());
+
         return storageManager;
+    }
+
+    @Bean
+    public DataRoot dataRoot() {
+        return (DataRoot) storageManager().root();
     }
 }
 
