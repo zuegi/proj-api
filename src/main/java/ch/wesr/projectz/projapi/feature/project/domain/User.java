@@ -1,4 +1,4 @@
-package ch.wesr.projectz.projapi.domain;
+package ch.wesr.projectz.projapi.feature.project.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package ch.wesr.projectz.projapi.storage;
 
-import ch.wesr.projectz.projapi.domain.Project;
+import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import lombok.extern.slf4j.Slf4j;
 import one.microstream.storage.types.EmbeddedStorageManager;
 import org.springframework.beans.factory.annotation.Autowired;

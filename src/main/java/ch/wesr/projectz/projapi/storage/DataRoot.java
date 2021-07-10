@@ -1,6 +1,6 @@
 package ch.wesr.projectz.projapi.storage;
 
-import ch.wesr.projectz.projapi.domain.Project;
+import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

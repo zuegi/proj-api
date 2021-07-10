@@ -1,7 +1,7 @@
 package ch.wesr.projectz.projapi.web;
 
-import ch.wesr.projectz.projapi.domain.Project;
-import ch.wesr.projectz.projapi.domain.User;
+import ch.wesr.projectz.projapi.feature.project.domain.Project;
+import ch.wesr.projectz.projapi.feature.project.domain.User;
 import ch.wesr.projectz.projapi.storage.DataRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +37,8 @@ public class ProjectResource {
     @GetMapping("/createSingle")
     @ResponseBody
     public List<Project> createSingleProject() {
-        Project project = new Project("projectz", "heimliches Projekt", "2da3-adf2K-12KT", new User("René", "Weishaupt"));
-        repository.addProject(project);
+//        Project project = new Project("projectz", "heimliches Projekt", "2da3-adf2K-12KT", new User("René", "Weishaupt"));
+//        repository.addProject(project);
         return repository.getProjectList();
     }
 

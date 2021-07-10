@@ -1,8 +1,8 @@
 package ch.wesr.projectz.projapi.config;
 
 
-import ch.wesr.projectz.projapi.domain.Project;
-import ch.wesr.projectz.projapi.domain.User;
+import ch.wesr.projectz.projapi.feature.project.domain.Project;
+import ch.wesr.projectz.projapi.feature.project.domain.User;
 import ch.wesr.projectz.projapi.storage.DataRoot;
 import lombok.extern.slf4j.Slf4j;
 import one.microstream.afs.nio.NioFileSystem;
@@ -34,8 +34,6 @@ public class MicrostreamConfig {
             log.info("No database found  - creating a new one");
             DataRoot dataRoot = new DataRoot();
             storageManager.setRoot(dataRoot);
-            dataRoot.getProjectList().add(new Project("return of the avatar", "Avator", "123d4-sdfaf-adf2K", new User("Ang", "Avatar")));
-            dataRoot.getProjectList().add(new Project("return of the jedi", "Jedi", "123d4-jedi-adf2K", new User("Master", "Jedi")));
             dataRoot.setLocation(location);
             dataRoot.setContent("Avatar");
             storageManager.storeRoot();
