@@ -18,6 +18,7 @@ public class ProjectCommandEnricher {
             AddProjectOwner addProjectOwner = (AddProjectOwner) cmd;
             addProjectOwner.setProjectOwner(findProjectOwnerById(addProjectOwner.getUserId()));
         }
+
     }
 
     private User findProjectOwnerById(String userId) {

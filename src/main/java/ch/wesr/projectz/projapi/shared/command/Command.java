@@ -6,4 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 public interface Command {
+
+    String getCommandId();
 }

@@ -24,9 +24,10 @@ class InMemoryCommandDispatcherTest {
 
         // Add projectOwner
         User projectOwner = new User("uex1234","Paul", "King");
-        AddProjectOwner addProjectOwner = new AddProjectOwner("uex1234", projectOwner);
+        AddProjectOwner addProjectOwner = new AddProjectOwner(project.getProjectId().getId(), "uex1234", projectOwner);
         dispatcher.registerHandler(AddProjectOwner.class, new ProjectCommandHandler(project));
         project = dispatcher.dispatch(addProjectOwner);
+
         assertNotNull(project.getProjectId());
         assertEquals(project.getName(), createProject.getName());
         assertEquals(project.getDescription(), createProject.getDescription());
@@ -43,7 +44,7 @@ class InMemoryCommandDispatcherTest {
         Project project = dispatcher.dispatch(createProject);
         // Add projectOwner
         User projectOwner = new User("uex1234","Paul", "King");
-        AddProjectOwner addProjectOwner = new AddProjectOwner("uex1234", projectOwner);
+        AddProjectOwner addProjectOwner = new AddProjectOwner( project.getProjectId().getId(),"uex1234", projectOwner);
         dispatcher.registerHandler(AddProjectOwner.class, new ProjectCommandHandler(project));
         project = dispatcher.dispatch(addProjectOwner);
 
@@ -54,7 +55,7 @@ class InMemoryCommandDispatcherTest {
 
 
         dispatcher.registerHandler(ChangeProjectName.class, new ProjectCommandHandler(project));
-        ChangeProjectName changeProjectName = new ChangeProjectName(project.getProjectId(), project.getName());
+        ChangeProjectName changeProjectName = new ChangeProjectName(project.getProjectId().getId(), project.getName());
 
         Project updatedProject = dispatcher.dispatch(changeProjectName);
 

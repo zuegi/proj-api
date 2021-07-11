@@ -34,17 +34,11 @@ public class MicrostreamConfig {
             log.info("No database found  - creating a new one");
             DataRoot dataRoot = new DataRoot();
             storageManager.setRoot(dataRoot);
-            dataRoot.setLocation(location);
-            dataRoot.setContent("Avatar");
             storageManager.storeRoot();
         }
 
         return storageManager;
     }
 
-    @Bean
-    public DataRoot dataRoot() {
-        return (DataRoot) storageManager().root();
-    }
 }
 

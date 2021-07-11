@@ -24,11 +24,12 @@ class ProjectApplicationServiceIntegrationTest {
     @Test
     void Project_create_valid() {
         CreateProject createProject = new CreateProject("Project A", "Description of project A");
-        AddProjectOwner addProjectOwner = new AddProjectOwner("uex1234");
+        AddProjectOwner addProjectOwner = new AddProjectOwner("12234", "uex1234" );
         Project project = service.execute(Arrays.asList(createProject, addProjectOwner));
 
         assertEquals(project.getName(), createProject.getName());
-        assertEquals(project.getProjectOwner().getName(), "paul");
+        assertEquals(project.getProjectOwner().getName(), "Paul");
+
     }
 
 }
