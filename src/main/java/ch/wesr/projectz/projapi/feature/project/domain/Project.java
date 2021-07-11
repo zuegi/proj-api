@@ -33,6 +33,7 @@ public class Project {
     public static Project copy(Project project) {
         Project newProject = create(project.getProjectId(), project.getName(), project.getDescription());
         newProject.changeProjectOwner(project.getProjectOwner());
+        newProject.newCommit();
         return newProject;
     }
 

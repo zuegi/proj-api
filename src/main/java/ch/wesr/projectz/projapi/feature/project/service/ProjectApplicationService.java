@@ -8,6 +8,7 @@ import ch.wesr.projectz.projapi.feature.project.domain.command.ProjectCommandHan
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectRepository;
 import ch.wesr.projectz.projapi.shared.command.Command;
 import ch.wesr.projectz.projapi.shared.command.InMemoryCommandDispatcher;
+import ch.wesr.projectz.projapi.shared.exception.BusinessValidationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,32 +27,25 @@ public class ProjectApplicationService {
 
     public Project execute(List<Command> commands) {
 
-        List<Project> projects = commands.stream().map(command -> {
-            Project project = findProjectByProjectId(command.getCommandId());
-            enricher.enrich(command);
+        Project project = null;
+        for (Command command : commands) {
+            if (command.getCommandId() != null) {
+                project = findProjectByProjectId(command.getCommandId());
+            }
             dispatcher.registerHandler(command.getClass(), new ProjectCommandHandler(project));
-
-            return save(dispatcher.dispatch(command));
-            // und wie mache ich hier, sodass ich ein Project zurückgeben kann??
-        }).collect(Collectors.toList());
-
-        // and return project to query oder so etwas
-        return projects.get(projects.size() - 1);
-    }
-
-    private Project save(Project project) {
-        log.info("save project; " + project);
+            enricher.enrich(command);
+            project = dispatcher.dispatch(command);
+        }
         repository.add(project);
         return project;
     }
 
+
     private Project findProjectByProjectId(String commandId) {
         if (commandId != null) {
-            CreateProject createProject = new CreateProject("Project A", "Description of project A");
-            return Project.create(new ProjectId("12234"), createProject.getName(), createProject.getDescription());
+            return repository.findLatestByProjectId(new ProjectId(commandId));
         }
-        CreateProject createProject = new CreateProject("Project A", "Description of project A");
-        return Project.create(new ProjectId("12234"), createProject.getName(), createProject.getDescription());
+        return null;
     }
 
 }

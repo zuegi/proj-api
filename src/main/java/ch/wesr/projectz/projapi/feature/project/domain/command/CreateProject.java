@@ -14,11 +14,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CreateProject implements Command {
+    private String projectId;
     private String name;
     private String description;
 
     @Override
     public String getCommandId() {
-        return null;
+        return projectId;
     }
 }

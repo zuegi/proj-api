@@ -13,14 +13,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ProjectCommandHandler implements CommandHandler<Command, Project> {
 
-    Project project;
+    private Project project;
 
     @Override
     public Project handle(Command cmd) {
 
         if (cmd instanceof CreateProject) {
             CreateProject createProject = (CreateProject) cmd;
-            return Project.create(ProjectId.generate(), createProject.getName(), createProject.getDescription());
+            return Project.create(new ProjectId(createProject.getCommandId()), createProject.getName(), createProject.getDescription());
         } else if (cmd instanceof ChangeProjectName) {
             ChangeProjectName changeProjectName = (ChangeProjectName) cmd;
             Project newProject = Project.copy(this.project);

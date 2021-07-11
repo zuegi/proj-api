@@ -19,7 +19,7 @@ class InMemoryCommandDispatcherTest {
 //        dispatcher.registerHandler(AddProject.class, new AddProjectHandler());
         dispatcher.registerHandler(CreateProject.class, new ProjectCommandHandler());
         // Create Project
-        CreateProject createProject = new CreateProject("Project A", "Description of project A");
+        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A");
         Project project = dispatcher.dispatch(createProject);
 
         // Add projectOwner
@@ -40,7 +40,7 @@ class InMemoryCommandDispatcherTest {
         InMemoryCommandDispatcher dispatcher = new InMemoryCommandDispatcher();
         dispatcher.registerHandler(CreateProject.class, new ProjectCommandHandler());
         // Create Project
-        CreateProject createProject = new CreateProject("Project A", "Description of project A");
+        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A");
         Project project = dispatcher.dispatch(createProject);
         // Add projectOwner
         User projectOwner = new User("uex1234","Paul", "King");
@@ -59,11 +59,13 @@ class InMemoryCommandDispatcherTest {
 
         Project updatedProject = dispatcher.dispatch(changeProjectName);
 
-        assertEquals(project.getProjectId(), changeProjectName.getProjectId());
+        assertEquals(project.getProjectId().getId(), changeProjectName.getProjectId());
         assertNotEquals(project.getCommitId(), updatedProject.getCommitId());
         assertEquals(updatedProject.getName(), changeProjectName.getName());
         assertEquals(project.getDescription(), updatedProject.getDescription());
         assertEquals(project.getProjectOwner(), updatedProject.getProjectOwner());
 
     }
+
+
 }
