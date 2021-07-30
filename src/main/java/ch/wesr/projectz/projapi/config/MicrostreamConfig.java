@@ -1,8 +1,6 @@
 package ch.wesr.projectz.projapi.config;
 
 
-import ch.wesr.projectz.projapi.feature.project.domain.Project;
-import ch.wesr.projectz.projapi.feature.project.domain.User;
 import ch.wesr.projectz.projapi.storage.DataRoot;
 import lombok.extern.slf4j.Slf4j;
 import one.microstream.afs.nio.NioFileSystem;

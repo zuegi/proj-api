@@ -1,12 +1,10 @@
 package ch.wesr.projectz.projapi.feature.project.service;
 
-import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectId;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectRepository;
-import ch.wesr.projectz.projapi.feature.project.domain.User;
+import ch.wesr.projectz.projapi.feature.user.domain.User;
 import ch.wesr.projectz.projapi.feature.project.domain.command.AddProjectOwner;
 import ch.wesr.projectz.projapi.feature.project.domain.command.CreateProject;
-import ch.wesr.projectz.projapi.feature.project.domain.command.ProjectCommandHandler;
 import ch.wesr.projectz.projapi.shared.command.Command;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -2,7 +2,7 @@ package ch.wesr.projectz.projapi.shared.command;
 
 
 import ch.wesr.projectz.projapi.feature.project.domain.Project;
-import ch.wesr.projectz.projapi.feature.project.domain.User;
+import ch.wesr.projectz.projapi.feature.user.domain.User;
 import ch.wesr.projectz.projapi.feature.project.domain.command.*;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ class InMemoryCommandDispatcherTest {
 //        dispatcher.registerHandler(AddProject.class, new AddProjectHandler());
         dispatcher.registerHandler(CreateProject.class, new ProjectCommandHandler());
         // Create Project
-        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A");
+        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A", "createProject");
         Project project = dispatcher.dispatch(createProject);
 
         // Add projectOwner
@@ -40,7 +40,7 @@ class InMemoryCommandDispatcherTest {
         InMemoryCommandDispatcher dispatcher = new InMemoryCommandDispatcher();
         dispatcher.registerHandler(CreateProject.class, new ProjectCommandHandler());
         // Create Project
-        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A");
+        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A", "createProject");
         Project project = dispatcher.dispatch(createProject);
         // Add projectOwner
         User projectOwner = new User("uex1234","Paul", "King");

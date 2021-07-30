@@ -24,7 +24,7 @@ class ProjectApplicationServiceIntegrationTest {
 
     @Test
     void Project_create_valid() {
-        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A");
+        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A", "createProject");
         AddProjectOwner addProjectOwner = new AddProjectOwner(null, "uex1234" );
         Project project = service.execute(Arrays.asList(createProject, addProjectOwner));
 
@@ -35,7 +35,7 @@ class ProjectApplicationServiceIntegrationTest {
 
     @Test
     void project_change_name_valid() {
-        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A");
+        CreateProject createProject = new CreateProject(null, "Project A", "Description of project A", "createProject");
         AddProjectOwner addProjectOwner = new AddProjectOwner(null, "uex1234" );
         Project project = service.execute(Arrays.asList(createProject, addProjectOwner));
         assertEquals(project.getName(), createProject.getName());

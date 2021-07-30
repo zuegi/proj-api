@@ -1,8 +1,7 @@
 package ch.wesr.projectz.projapi.feature.project.domain.command;
 
-import ch.wesr.projectz.projapi.feature.project.domain.User;
+import ch.wesr.projectz.projapi.feature.user.domain.User;
 import ch.wesr.projectz.projapi.shared.command.Command;
-import ch.wesr.projectz.projapi.shared.command.CommandId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;

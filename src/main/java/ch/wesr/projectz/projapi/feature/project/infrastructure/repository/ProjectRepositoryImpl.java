@@ -1,4 +1,4 @@
-package ch.wesr.projectz.projapi.feature.project.infrastructure;
+package ch.wesr.projectz.projapi.feature.project.infrastructure.repository;
 
 import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectId;

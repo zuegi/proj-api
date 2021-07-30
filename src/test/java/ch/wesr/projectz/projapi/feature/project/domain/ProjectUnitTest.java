@@ -1,5 +1,6 @@
 package ch.wesr.projectz.projapi.feature.project.domain;
 
+import ch.wesr.projectz.projapi.feature.user.domain.User;
 import ch.wesr.projectz.projapi.shared.exception.BusinessValidationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
