@@ -1,6 +1,7 @@
 package ch.wesr.projectz.projapi.shared.eventbus;
 
 import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.ProjectInfo;
+import ch.wesr.projectz.projapi.feature.user.domain.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ public class ProjectCreation {
 
     ProjectCreationState  state;
     ProjectInfo projectInfo;
+    User user;
 
     public void place(final ProjectInfo projectInfo) {
         this.projectInfo = projectInfo;
@@ -20,7 +22,9 @@ public class ProjectCreation {
     public void accept() {
         state = ProjectCreationState.ACCEPTED;
     }
-
+    public void create() {
+        state = ProjectCreationState.CREATED;
+    }
 
     public enum ProjectCreationState {
         PLACED,

@@ -1,7 +1,7 @@
 package ch.wesr.projectz.projapi.feature.project.infrastructure.rest;
 
+import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectId;
-import ch.wesr.projectz.projapi.feature.project.domain.command.CreateProject;
 import ch.wesr.projectz.projapi.feature.project.domain.query.ProjectUI;
 import ch.wesr.projectz.projapi.feature.project.service.ProjectCommandService;
 import ch.wesr.projectz.projapi.feature.project.service.ProjectQueryService;

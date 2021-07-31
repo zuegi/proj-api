@@ -6,8 +6,10 @@ import ch.wesr.projectz.projapi.feature.project.domain.ProjectId;
 import ch.wesr.projectz.projapi.feature.project.domain.command.CreateProject;
 import ch.wesr.projectz.projapi.feature.project.domain.command.ProjectCommandHandler;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectRepository;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.ProjectInfo;
 import ch.wesr.projectz.projapi.shared.command.Command;
 import ch.wesr.projectz.projapi.shared.command.InMemoryCommandDispatcher;
+import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectCreated;
 import ch.wesr.projectz.projapi.shared.exception.BusinessValidationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,4 +50,11 @@ public class ProjectApplicationService {
         return null;
     }
 
+
+
+    public void createProject(ProjectCreated projectCreated) {
+        ProjectInfo pinfo = projectCreated.getProjectCreation().getProjectInfo();
+        Project project = Project.create(new ProjectId(pinfo.getProjectId()), pinfo.getName(), pinfo.getDescription());
+        repository.add(project);
+    }
 }

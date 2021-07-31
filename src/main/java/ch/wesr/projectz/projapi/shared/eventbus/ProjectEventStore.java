@@ -2,7 +2,9 @@ package ch.wesr.projectz.projapi.shared.eventbus;
 
 
 import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectAccepted;
+import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectCreated;
 import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectPlaced;
+import ch.wesr.projectz.projapi.shared.eventbus.event.UserFound;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -23,12 +25,21 @@ public class ProjectEventStore {
     }
 
     public void apply(ProjectAccepted projectAccepted) {
-        applyFor(projectAccepted.getProjectCreation().projectInfo.getProjectId(), ProjectCreation::accept);
+        applyFor(projectAccepted.getProjectCreation().getProjectInfo().getProjectId(), ProjectCreation::accept);
     }
 
     private void applyFor(final String orderId, final Consumer<ProjectCreation> consumer) {
         final ProjectCreation projectCreation = projectStore.get(orderId);
         if (projectCreation != null)
             consumer.accept(projectCreation);
+    }
+
+    public void applyUser(UserFound userFound) {
+        final ProjectCreation projectCreation = projectStore.get(userFound.getProjectId());
+        projectCreation.setUser(userFound.getUser());
+    }
+
+    public void apply(ProjectCreated projectCreated) {
+        applyFor(projectCreated.getProjectCreation().getProjectInfo().getProjectId(), ProjectCreation::create);
     }
 }

@@ -1,5 +1,15 @@
 package ch.wesr.projectz.projapi.feature.project.domain.query;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectUI {
+    String projectId;
+    String name;
+    String description;
 }
