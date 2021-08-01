@@ -1,6 +1,5 @@
 package ch.wesr.projectz.projapi.feature.project.infrastructure.rest;
 
-import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import ch.wesr.projectz.projapi.feature.project.domain.query.ProjectUI;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ public class ProjectResourceIntegrationTest {
     protected ObjectMapper objectMapper;
 
     @Test
-    void project_create_is_valid() throws Exception {
+    void project_create_valid_user() throws Exception {
         // create project
         ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", "rw170669");
         MvcResult mvcResult = performPost(projectInfo).andExpect(status().isAccepted()).andReturn();
@@ -44,6 +43,18 @@ public class ProjectResourceIntegrationTest {
         ProjectUI projectUI = objectMapper.readValue(mvcGetResult.getResponse().getContentAsString(), ProjectUI.class);
         assertThat(projectUI.getProjectId(), is(projectId));
 
+    }
+
+    @Test
+    void project_create_invalid_user() throws Exception {
+        // create project
+        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", "hk120198");
+        MvcResult mvcResult = performPost(projectInfo).andExpect(status().isAccepted()).andReturn();
+        assertThat(mvcResult.getResponse().getHeader(HttpHeaders.LOCATION), is("/api/project"));
+        String projectId = mvcResult.getResponse().getHeader("projectId");
+        assertNotNull(projectId);
+        // no project found
+        performGet(projectId).andExpect(status().isNotFound());
     }
 
     private ResultActions performPost(ProjectInfo projectInfo) throws Exception {

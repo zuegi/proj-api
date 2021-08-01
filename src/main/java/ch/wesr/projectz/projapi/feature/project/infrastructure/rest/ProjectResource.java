@@ -24,13 +24,6 @@ public class ProjectResource {
     @Autowired
     ProjectQueryService queryService;
 
-//    @PostMapping
-//    public ResponseEntity.BodyBuilder create(@RequestBody List<Command> commandList) {
-//        log.info("commandList size: {} ", commandList.size());
-//        return ResponseEntity.ok();
-//    }
-
-    // new one
     @PostMapping
     public ResponseEntity placeProject(@RequestBody ProjectInfo projectInfo) {
 

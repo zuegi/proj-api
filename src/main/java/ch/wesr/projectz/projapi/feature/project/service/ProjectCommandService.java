@@ -6,6 +6,7 @@ import ch.wesr.projectz.projapi.shared.eventbus.ProjectCreation;
 import ch.wesr.projectz.projapi.shared.eventbus.ProjectEventPublisher;
 import ch.wesr.projectz.projapi.shared.eventbus.ProjectEventStore;
 import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectAccepted;
+import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectCanceled;
 import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectCreated;
 import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectPlaced;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,11 @@ public class ProjectCommandService {
     public void createProject(String projectId) {
         ProjectCreation projectCreation = projectEventStore.get(projectId);
         projectEventPublisher.publish(new ProjectCreated(projectCreation));
+    }
+
+    public void cancelProject(String projectId, String userId) {
+        ProjectCreation projectCreation = projectEventStore.get(projectId);
+        String reason = "User with ID: ["+userId +"] not found";
+        projectEventPublisher.publish(new ProjectCanceled(projectCreation, reason));
     }
 }

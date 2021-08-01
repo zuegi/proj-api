@@ -1,7 +1,5 @@
 package ch.wesr.projectz.projapi.shared.eventbus;
 
-import ch.wesr.projectz.projapi.feature.project.domain.command.CreateProject;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.ProjectInfo;
 import ch.wesr.projectz.projapi.shared.eventbus.event.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +36,10 @@ public class ProjectEventPublisher {
     public void publish(ProjectCreated projectCreated) {
         log.info("Publishing event: {}", projectCreated);
         applicationEventPublisher.publishEvent(projectCreated);
+    }
+
+    public void publish(ProjectCanceled projectCanceled) {
+        log.info("Publishing event: {}", projectCanceled);
+        applicationEventPublisher.publishEvent(projectCanceled);
     }
 }

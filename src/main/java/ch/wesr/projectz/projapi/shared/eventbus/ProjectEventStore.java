@@ -1,10 +1,7 @@
 package ch.wesr.projectz.projapi.shared.eventbus;
 
 
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectAccepted;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectCreated;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectPlaced;
-import ch.wesr.projectz.projapi.shared.eventbus.event.UserFound;
+import ch.wesr.projectz.projapi.shared.eventbus.event.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -41,5 +38,9 @@ public class ProjectEventStore {
 
     public void apply(ProjectCreated projectCreated) {
         applyFor(projectCreated.getProjectCreation().getProjectInfo().getProjectId(), ProjectCreation::create);
+    }
+
+    public void apply(ProjectCanceled projectCanceled) {
+        applyFor(projectCanceled.getProjectCreation().getProjectInfo().getProjectId(), ProjectCreation::cancel);
     }
 }

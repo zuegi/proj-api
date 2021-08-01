@@ -3,10 +3,7 @@ package ch.wesr.projectz.projapi.shared.eventbus;
 import ch.wesr.projectz.projapi.feature.project.service.ProjectApplicationService;
 import ch.wesr.projectz.projapi.feature.project.service.ProjectCommandService;
 import ch.wesr.projectz.projapi.feature.user.service.UserService;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectAccepted;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectCreated;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectPlaced;
-import ch.wesr.projectz.projapi.shared.eventbus.event.UserFound;
+import ch.wesr.projectz.projapi.shared.eventbus.event.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -39,13 +36,6 @@ public class ProjectEventListener {
     }
 
     @EventListener
-    public void handleUserFound(UserFound userFound) {
-        log.info("Consuming Event: {} - accepting project with projectId: {}", userFound.getUser(), userFound.getProjectId());
-        projectEventStore.applyUser(userFound);
-        commandService.acceptProject(userFound.getProjectId(), userFound.getUser());
-    }
-
-    @EventListener
     public void handleProjectAccepted(ProjectAccepted projectAccepted) {
         log.info("Consuming Event: {}", projectAccepted);
         projectEventStore.apply(projectAccepted);
@@ -59,4 +49,22 @@ public class ProjectEventListener {
         projectApplicationService.createProject(projectCreated);
     }
 
+    @EventListener
+    public void handleProjectCanceled(ProjectCanceled projectCanceled) {
+        log.info("Consuming Event: {}", projectCanceled);
+        projectEventStore.apply(projectCanceled);
+    }
+
+    @EventListener
+    public void handleUserFound(UserFound userFound) {
+        log.info("Consuming Event: {} - accepting project with projectId: {}", userFound.getUser(), userFound.getProjectId());
+        projectEventStore.applyUser(userFound);
+        commandService.acceptProject(userFound.getProjectId(), userFound.getUser());
+    }
+
+    @EventListener
+    public void handleUserNotFound(UserNotFound userNotFound) {
+        log.info("Consuming Event: Invalid user {} - canceling project with projectId: {}", userNotFound.getUserId(), userNotFound.getProjectId());
+        commandService.cancelProject(userNotFound.getProjectId(), userNotFound.getUserId());
+    }
 }

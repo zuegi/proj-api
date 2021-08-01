@@ -19,7 +19,7 @@ public class UserService {
             User rw170669 = new User("rw170669", "Max", "Smith");
             projectEventPublisher.publish(new UserFound(projectId, rw170669));
         } else {
-            projectEventPublisher.publish(new UserNotFound(userId));
+            projectEventPublisher.publish(new UserNotFound(projectId, userId));
 
         }
     }

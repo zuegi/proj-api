@@ -1,6 +1,6 @@
 package ch.wesr.projectz.projapi.shared.eventbus.event;
 
-import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.ProjectInfo;
+import ch.wesr.projectz.projapi.shared.eventbus.ProjectCreation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserNotFound extends AbstractEvent {
-   String projectId;
-   String userId;
+public class ProjectCanceled extends AbstractEvent {
+    ProjectCreation projectCreation;
+    String reason;
 }

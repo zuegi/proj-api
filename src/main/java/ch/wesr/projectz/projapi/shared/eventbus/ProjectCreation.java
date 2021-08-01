@@ -25,6 +25,9 @@ public class ProjectCreation {
     public void create() {
         state = ProjectCreationState.CREATED;
     }
+    public void cancel() {
+        state = ProjectCreationState.CANCELLED;
+    }
 
     public enum ProjectCreationState {
         PLACED,
