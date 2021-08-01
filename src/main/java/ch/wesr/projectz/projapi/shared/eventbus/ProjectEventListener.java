@@ -32,7 +32,7 @@ public class ProjectEventListener {
     public void handleProjectPlaced(ProjectPlaced projectPlaced) {
         projectEventStore.apply(projectPlaced);
         log.info("Consuming Event: {}", projectPlaced);
-        // looking for a user like usd2835 then publish accept Project
+        // looking for a user like rw170669 then publish accept Project
         // look for userid und dann muss der User irgenwie in das Object rein, denn zum schluss schreiben wir das Object in den Store
         log.info("Looking for user with userId: {}", projectPlaced.getProjectInfo().getUserId());
         userService.publishUserById(projectPlaced.getProjectInfo().getProjectId(), projectPlaced.getProjectInfo().getUserId());

@@ -14,10 +14,10 @@ public class UserService {
     private ProjectEventPublisher projectEventPublisher;
 
     public void publishUserById(String projectId, String userId) {
-        // TODO Replace hard coded usd2835 with repo call
-        if (userId.equals("usd2835")) {
-            User usd2835 = new User("usd2835", "Max", "Smith");
-            projectEventPublisher.publish(new UserFound(projectId, usd2835));
+        // TODO Replace hard coded rw170669 with repo call
+        if (userId.equals("rw170669")) {
+            User rw170669 = new User("rw170669", "Max", "Smith");
+            projectEventPublisher.publish(new UserFound(projectId, rw170669));
         } else {
             projectEventPublisher.publish(new UserNotFound(userId));
 

@@ -34,7 +34,7 @@ public class ProjectResourceIntegrationTest {
     @Test
     void project_create_is_valid() throws Exception {
         // create project
-        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", "usd2835");
+        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", "rw170669");
         MvcResult mvcResult = performPost(projectInfo).andExpect(status().isAccepted()).andReturn();
         assertThat(mvcResult.getResponse().getHeader(HttpHeaders.LOCATION), is("/api/project"));
         String projectId = mvcResult.getResponse().getHeader("projectId");
