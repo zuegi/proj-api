@@ -1,6 +1,5 @@
-package ch.wesr.projectz.projapi.feature.project.infrastructure.rest;
+package ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command;
 
-import ch.wesr.projectz.projapi.feature.project.domain.ProjectMembers;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

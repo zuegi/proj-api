@@ -22,6 +22,11 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     @Override
+    public void persist(Project project) {
+        persistence.store(project);
+    }
+
+    @Override
     public Project get(ProjectId projectId) {
         return null;
     }
@@ -29,7 +34,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     @Override
     public Project findLatestByProjectId(ProjectId projectId) {
         return persistence.dataRoot().getProjectList().stream()
-                .filter(project -> /*project.isLatest() &&*/ project.getProjectId().getId().equals(projectId.getId()))
+                .filter(project -> project.isLatest() && project.getProjectId().getId().equals(projectId.getId()))
                 .findFirst()
                 .orElse(null);
 

@@ -1,4 +1,4 @@
-package ch.wesr.projectz.projapi.feature.project.domain.query;
+package ch.wesr.projectz.projapi.feature.project.infrastructure.rest.query;
 
 
 import lombok.AllArgsConstructor;
@@ -12,4 +12,5 @@ public class ProjectUI {
     String projectId;
     String name;
     String description;
+    ProjectOwnerUi projectOwnerUi;
 }

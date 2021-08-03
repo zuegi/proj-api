@@ -29,4 +29,19 @@ public class UserEventListener {
         log.info("Consuming Event: Invalid user {} - canceling project with projectId: {}", userNotFound.getUserId(), userNotFound.getProjectId());
         commandService.cancelProject(userNotFound.getProjectId(), userNotFound.getUserId());
     }
+
+    @EventListener
+    public void handleChangeProjectOwnerFound(ChangeProjectOwnerFound changeProjectOwnerFound) {
+        log.info("Consuming Event: {} - accepting project with projectId: {}", changeProjectOwnerFound.getUser(), changeProjectOwnerFound.getProjectId());
+        projectEventStore.applyChangeProjectOwnerFound(changeProjectOwnerFound);
+        commandService.acceptChangeProjectOwner(changeProjectOwnerFound.projectId, changeProjectOwnerFound.user );
+    }
+
+
+    @EventListener
+    public void handleChangeProjectOwnerNotFound(ChangeProjectOwnerNotFound changeProjectOwnerNotFound) {
+        log.info("Consuming Event: Invalid user {} - canceling project with projectId: {}", changeProjectOwnerNotFound.getUserId(), changeProjectOwnerNotFound.getProjectId());
+        commandService.cancelProject(changeProjectOwnerNotFound.getProjectId(), changeProjectOwnerNotFound.getUserId());
+    }
+
 }

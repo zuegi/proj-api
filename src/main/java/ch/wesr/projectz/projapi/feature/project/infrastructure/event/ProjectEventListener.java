@@ -55,5 +55,18 @@ public class ProjectEventListener {
         projectEventStore.apply(projectCanceled);
     }
 
+    @EventListener
+    public void handleProjectOwnerChangePlaced(ProjectOwnerChangePlaced projectOwnerChangeAccepted) {
+        log.info("Consuming Event: {}", projectOwnerChangeAccepted);
+        log.info("Looking for user with userId: {}", projectOwnerChangeAccepted.getProjectOwnerId());
+        userService.publishChangeProjectOwnerById(projectOwnerChangeAccepted.projectCreation.getProjectInfo().getProjectId(), projectOwnerChangeAccepted.getProjectOwnerId());
+    }
+
+    @EventListener
+    public void handleProjectOwnerChangeCreated(ProjectOwnerChangeCreated projectOwnerChangeCreated) {
+        log.info("Consuming Event: {}", projectOwnerChangeCreated);
+        projectEventStore.applyChangeProjectOwner(projectOwnerChangeCreated);
+        projectApplicationService.saveProject(projectOwnerChangeCreated);
+    }
 
 }

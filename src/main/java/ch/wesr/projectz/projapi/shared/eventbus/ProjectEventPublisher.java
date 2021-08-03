@@ -1,9 +1,8 @@
 package ch.wesr.projectz.projapi.shared.eventbus;
 
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectAccepted;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCanceled;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCreated;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectPlaced;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.*;
+import ch.wesr.projectz.projapi.feature.user.infrastructure.event.ChangeProjectOwnerFound;
+import ch.wesr.projectz.projapi.feature.user.infrastructure.event.ChangeProjectOwnerNotFound;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserFound;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserNotFound;
 import lombok.extern.slf4j.Slf4j;
@@ -46,5 +45,25 @@ public class ProjectEventPublisher {
     public void publish(ProjectCanceled projectCanceled) {
         log.info("Publishing event: {}", projectCanceled);
         applicationEventPublisher.publishEvent(projectCanceled);
+    }
+
+    public void publish(ProjectOwnerChangePlaced projectOwnerChangeAccepted) {
+        log.info("Publishing event: {}", projectOwnerChangeAccepted);
+        applicationEventPublisher.publishEvent(projectOwnerChangeAccepted);
+    }
+
+    public void publish(ChangeProjectOwnerFound changeProjectOwnerFound) {
+        log.info("Publishing event: {}", changeProjectOwnerFound);
+        applicationEventPublisher.publishEvent(changeProjectOwnerFound);
+    }
+
+    public void publish(ChangeProjectOwnerNotFound changeProjectOwnerNotFound) {
+        log.info("Publishing event: {}", changeProjectOwnerNotFound);
+        applicationEventPublisher.publishEvent(changeProjectOwnerNotFound);
+    }
+
+    public void publish(ProjectOwnerChangeCreated projectOwnerChangeCreated) {
+        log.info("Publishing event: {}", projectOwnerChangeCreated);
+        applicationEventPublisher.publishEvent(projectOwnerChangeCreated);
     }
 }

@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectUnitTest {
@@ -27,14 +30,42 @@ class ProjectUnitTest {
 
     @Test
     void project_is_valid() {
-        User paul = new User("pk060464", "Paul", "King");
 
+        createValidProject();
+    }
+
+    private Project createValidProject() {
         Project project = Project.create(ProjectId.generate(), PROJECT_A, PROJECT_DESCRIPTION_A,UserTestHelper.PROJECT_LEADER, Arrays.asList(UserTestHelper.PROJECT_MEMBER_ANNA, UserTestHelper.PROJECT_MEMBER_KARL));
-        project.changeProjectOwner(paul);
+
         assertNotNull(project.getProjectId());
         assertEquals(project.getName(), PROJECT_A);
         assertEquals(project.getDescription(), PROJECT_DESCRIPTION_A);
-        assertEquals(project.getProjectOwner(), paul);
+        assertEquals(project.getProjectOwner(), UserTestHelper.PROJECT_LEADER);
+        assertThat(project.getProjectMembers().getMemberSet(), hasSize(3));
+
+        assertThat(project.getVersion(), is(0));
+        assertNotNull(project.getCommitId());
+
+        assertThat(project.isLatest(), is(true));
+        return project;
+    }
+
+    @Test
+    void project_change_project_owner_valid() {
+        Project project = createValidProject();
+
+        User paul = new User("pk060464", "Paul", "King");
+        Project changedProject = project.changeProjectOwner(paul);
+        assertEquals(project.getProjectId(), changedProject.getProjectId());
+        assertEquals(changedProject.getName(), PROJECT_A);
+        assertEquals(changedProject.getDescription(), PROJECT_DESCRIPTION_A);
+        assertEquals(changedProject.getProjectOwner(), paul);
+
+        assertThat(project.getVersion() +1 , is(changedProject.getVersion()));
+        assertNotEquals(project.getCommitId(), changedProject.getCommitId());
+
+        assertThat(project.isLatest(), is(false));
+        assertThat(changedProject.isLatest(), is(true));
     }
 
     @Test

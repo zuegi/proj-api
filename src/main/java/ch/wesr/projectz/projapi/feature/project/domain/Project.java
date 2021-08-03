@@ -32,7 +32,9 @@ public class Project {
         project.projectOwner = projectOwner;
         project.projectMembers = ProjectMembers.create(projectMembers, projectOwner);
 
+        project.newCommit();
         project.validate();
+
         return project;
     }
 
@@ -43,15 +45,18 @@ public class Project {
         newProject.description = this.description;
         newProject.projectOwner = projectOwner;
         newProject.projectMembers = projectMembers;
-        newProject.validate();
+        newProject.version = this.version;
+        newProject.latest = this.latest;
         newProject.newCommit();
+        newProject.validate();
         return newProject;
     }
 
-    public void changeProjectOwner(User projectOwner) {
-        Project newProject = copy();
+    public Project changeProjectOwner(User projectOwner) {
+        Project newProject = this.copy();
         newProject.projectOwner = projectOwner;
-        this.projectOwner = projectOwner;
+        this.latest = false;
+        return newProject;
     }
 
     private void newCommit() {

@@ -1,10 +1,8 @@
 package ch.wesr.projectz.projapi.shared.eventbus;
 
 
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectAccepted;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCanceled;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCreated;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectPlaced;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.*;
+import ch.wesr.projectz.projapi.feature.user.infrastructure.event.ChangeProjectOwnerFound;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserFound;
 import org.springframework.stereotype.Component;
 
@@ -46,5 +44,14 @@ public class ProjectEventStore {
 
     public void apply(ProjectCanceled projectCanceled) {
         applyFor(projectCanceled.getProjectCreation().getProjectInfo().getProjectId(), ProjectCreation::cancel);
+    }
+
+    public void applyChangeProjectOwnerFound(ChangeProjectOwnerFound changeProjectOwnerFound) {
+        final ProjectCreation projectCreation = projectStore.get(changeProjectOwnerFound.getProjectId());
+        projectCreation.setUser(changeProjectOwnerFound.getUser());
+    }
+
+    public void applyChangeProjectOwner(ProjectOwnerChangeCreated projectOwnerChangeCreated) {
+
     }
 }

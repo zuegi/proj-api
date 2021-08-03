@@ -1,31 +1,39 @@
 package ch.wesr.projectz.projapi.feature.project.infrastructure;
 
+import ch.wesr.projectz.projapi.AbstractIntegrationTest;
 import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectId;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectRepository;
+import ch.wesr.projectz.projapi.feature.user.UserTestHelper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-@SpringBootTest
-@ActiveProfiles({"integrationtest","local"})
-class ProjectRepositoryImplIntegrationTest {
+class ProjectRepositoryImplIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     ProjectRepository repository;
 
-//    @Test
-//    void list_all_projects() {
-//        repository.findAll().stream().forEach(System.out::println);
-//    }
-//    @Test
-//    void project_find_latest_by_projectId() {
-//        Project latestByProjectId = repository.findLatestByProjectId(new ProjectId("d363e682-dea7-443f-a3b0-e8e0ff2b3fa3"));
-//        assertNotNull(latestByProjectId);
-//    }
+    @Test
+    void project_create_and_change_owner_valid() {
+        ProjectId projectId = ProjectId.generate();
+        Project project = Project.create(projectId, "Project A", "Description of project A", UserTestHelper.PROJECT_LEADER, null);
+        repository.add(project);
+
+        Project latestByProjectId = repository.findLatestByProjectId(projectId);
+        assertThat(latestByProjectId.getProjectId(), is(projectId));
+        assertThat(latestByProjectId.getProjectOwner(), is(UserTestHelper.PROJECT_LEADER));
+
+        Project changedOwnerProject = latestByProjectId.changeProjectOwner(UserTestHelper.PROJECT_MEMBER_ANNA);
+        repository.persist(latestByProjectId);
+        repository.add(changedOwnerProject);
+
+        Project changedProjectFromRepo = repository.findLatestByProjectId(projectId);
+        assertThat(changedProjectFromRepo.getProjectId(), is(projectId));
+        assertThat(changedProjectFromRepo.getProjectOwner(), is(UserTestHelper.PROJECT_MEMBER_ANNA));
+    }
 
 
 }

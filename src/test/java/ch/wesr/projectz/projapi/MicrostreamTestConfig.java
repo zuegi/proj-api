@@ -1,4 +1,4 @@
-package ch.wesr.projectz.projapi.config;
+package ch.wesr.projectz.projapi;
 
 
 import ch.wesr.projectz.projapi.shared.persistence.DataRoot;
@@ -7,25 +7,38 @@ import one.microstream.afs.nio.NioFileSystem;
 import one.microstream.reflect.ClassLoaderProvider;
 import one.microstream.storage.types.EmbeddedStorage;
 import one.microstream.storage.types.EmbeddedStorageManager;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 
-@Slf4j
-@Configuration
-@Profile("!integrationtest")
-public class MicrostreamConfig {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
 
-    @Value("${microstream.store.location}")
-    String location;
+import static java.nio.file.Files.walk;
+import static java.util.Collections.reverseOrder;
+
+@Slf4j
+@TestConfiguration
+@Profile({"integrationtest"})
+public class MicrostreamTestConfig {
 
     @Bean
     public EmbeddedStorageManager storageManager() {
 
+        File tempFolder = new File("./target/junit/storage");
+        if (tempFolder.exists()) {
+            try {
+                walk(tempFolder.toPath()).sorted(reverseOrder())
+                        .map(Path::toFile)
+                        .forEach(File::delete);
+            } catch (IOException e) {
+                log.warn(e.getMessage());
+            }
+        }
+
         NioFileSystem fileSystem = NioFileSystem.New();
-        EmbeddedStorageManager storageManager = EmbeddedStorage.Foundation(fileSystem.ensureDirectoryPath(location))
+        EmbeddedStorageManager storageManager = EmbeddedStorage.Foundation(fileSystem.ensureDirectoryPath(tempFolder.getPath()))
                 .onConnectionFoundation(cf -> cf.setClassLoaderProvider(ClassLoaderProvider.New(
                         Thread.currentThread().getContextClassLoader())))
                 .start();

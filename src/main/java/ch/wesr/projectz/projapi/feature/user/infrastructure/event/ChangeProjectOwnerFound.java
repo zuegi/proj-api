@@ -1,5 +1,6 @@
 package ch.wesr.projectz.projapi.feature.user.infrastructure.event;
 
+import ch.wesr.projectz.projapi.feature.user.domain.User;
 import ch.wesr.projectz.projapi.shared.eventbus.event.AbstractEvent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class UserNotFound extends AbstractEvent {
-   String projectId;
-   String userId;
+public class ChangeProjectOwnerFound extends AbstractEvent {
+    String projectId;
+    User user;
 }

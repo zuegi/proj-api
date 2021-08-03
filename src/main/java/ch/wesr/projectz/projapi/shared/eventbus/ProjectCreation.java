@@ -1,6 +1,6 @@
 package ch.wesr.projectz.projapi.shared.eventbus;
 
-import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.ProjectInfo;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.ProjectInfo;
 import ch.wesr.projectz.projapi.feature.user.domain.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
