@@ -5,6 +5,8 @@ import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectId;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectRepository;
 import ch.wesr.projectz.projapi.feature.user.UserTestHelper;
+import one.microstream.storage.types.EmbeddedStorageManager;
+import org.junit.AfterClass;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,6 +17,7 @@ class ProjectRepositoryImplIntegrationTest extends AbstractIntegrationTest {
 
     @Autowired
     ProjectRepository repository;
+
 
     @Test
     void project_create_and_change_owner_valid() {

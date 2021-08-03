@@ -8,6 +8,8 @@ import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.query.Projec
 import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.query.ProjectUI;
 import ch.wesr.projectz.projapi.feature.user.UserTestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import one.microstream.storage.types.EmbeddedStorageManager;
+import org.junit.AfterClass;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
