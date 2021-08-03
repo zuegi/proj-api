@@ -2,8 +2,8 @@ package ch.wesr.projectz.projapi.feature.user.service;
 
 import ch.wesr.projectz.projapi.feature.user.domain.User;
 import ch.wesr.projectz.projapi.shared.eventbus.ProjectEventPublisher;
-import ch.wesr.projectz.projapi.shared.eventbus.event.UserFound;
-import ch.wesr.projectz.projapi.shared.eventbus.event.UserNotFound;
+import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserFound;
+import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserNotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

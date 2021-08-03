@@ -5,10 +5,10 @@ import ch.wesr.projectz.projapi.feature.user.domain.User;
 import ch.wesr.projectz.projapi.shared.eventbus.ProjectCreation;
 import ch.wesr.projectz.projapi.shared.eventbus.ProjectEventPublisher;
 import ch.wesr.projectz.projapi.shared.eventbus.ProjectEventStore;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectAccepted;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectCanceled;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectCreated;
-import ch.wesr.projectz.projapi.shared.eventbus.event.ProjectPlaced;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectAccepted;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCanceled;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCreated;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectPlaced;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

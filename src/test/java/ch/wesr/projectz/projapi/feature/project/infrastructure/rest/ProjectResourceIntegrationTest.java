@@ -33,7 +33,7 @@ public class ProjectResourceIntegrationTest {
     @Test
     void project_create_valid_user() throws Exception {
         // create project
-        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", "rw170669");
+        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", new ProjectOwnerInfo("rw170669"), new ProjectMembersInfo(null));
         MvcResult mvcResult = performPost(projectInfo).andExpect(status().isAccepted()).andReturn();
         assertThat(mvcResult.getResponse().getHeader(HttpHeaders.LOCATION), is("/api/project"));
         String projectId = mvcResult.getResponse().getHeader("projectId");
@@ -48,7 +48,7 @@ public class ProjectResourceIntegrationTest {
     @Test
     void project_create_invalid_user() throws Exception {
         // create project
-        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", "hk120198");
+        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", new ProjectOwnerInfo("hk120198"), new ProjectMembersInfo(null));
         MvcResult mvcResult = performPost(projectInfo).andExpect(status().isAccepted()).andReturn();
         assertThat(mvcResult.getResponse().getHeader(HttpHeaders.LOCATION), is("/api/project"));
         String projectId = mvcResult.getResponse().getHeader("projectId");

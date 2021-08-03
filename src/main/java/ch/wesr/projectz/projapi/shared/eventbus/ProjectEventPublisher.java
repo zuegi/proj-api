@@ -1,6 +1,11 @@
 package ch.wesr.projectz.projapi.shared.eventbus;
 
-import ch.wesr.projectz.projapi.shared.eventbus.event.*;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectAccepted;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCanceled;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCreated;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectPlaced;
+import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserFound;
+import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserNotFound;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;

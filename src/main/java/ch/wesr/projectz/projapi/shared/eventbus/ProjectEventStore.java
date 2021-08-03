@@ -1,7 +1,11 @@
 package ch.wesr.projectz.projapi.shared.eventbus;
 
 
-import ch.wesr.projectz.projapi.shared.eventbus.event.*;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectAccepted;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCanceled;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCreated;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectPlaced;
+import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserFound;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
