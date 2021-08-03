@@ -1,4 +1,4 @@
-package ch.wesr.projectz.projapi.domain;
+package ch.wesr.projectz.projapi.feature.user.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class User {
 
+    private String userId;
     private String name;
     private String lastName;
 
