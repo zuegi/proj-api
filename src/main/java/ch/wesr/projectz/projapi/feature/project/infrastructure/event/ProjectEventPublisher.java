@@ -1,6 +1,6 @@
-package ch.wesr.projectz.projapi.shared.eventbus;
+package ch.wesr.projectz.projapi.feature.project.infrastructure.event;
 
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.*;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.action.*;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.ChangeProjectOwnerFound;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.ChangeProjectOwnerNotFound;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserFound;

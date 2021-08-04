@@ -1,6 +1,6 @@
-package ch.wesr.projectz.projapi.feature.project.infrastructure.event;
+package ch.wesr.projectz.projapi.feature.project.infrastructure.event.action;
 
-import ch.wesr.projectz.projapi.shared.eventbus.ProjectCreation;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectLifecycle;
 import ch.wesr.projectz.projapi.shared.eventbus.event.AbstractEvent;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class ProjectCanceled extends AbstractEvent {
-    ProjectCreation projectCreation;
+    ProjectLifecycle projectLifecycle;
     String reason;
 }

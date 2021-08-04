@@ -1,15 +1,13 @@
 package ch.wesr.projectz.projapi.feature.project.infrastructure.rest;
 
 import ch.wesr.projectz.projapi.AbstractIntegrationTest;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.ProjectInfo;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.ProjectMembersInfo;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.ProjectOwnerInfo;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.PlaceProject;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.PlaceProjectMembers;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.PlaceProjectOwner;
 import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.query.ProjectOwnerUi;
 import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.query.ProjectUI;
 import ch.wesr.projectz.projapi.feature.user.UserTestHelper;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import one.microstream.storage.types.EmbeddedStorageManager;
-import org.junit.AfterClass;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -37,8 +35,8 @@ public class ProjectResourceIntegrationTest extends AbstractIntegrationTest {
     @Test
     void project_create_valid_user() throws Exception {
         // create project
-        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", new ProjectOwnerInfo(UserTestHelper.PROJECT_MEMBER_EPIFANIO.getUserId()), new ProjectMembersInfo(null));
-        MvcResult mvcResult = performPost(projectInfo).andExpect(status().isAccepted()).andReturn();
+        PlaceProject placeProject = new PlaceProject(null, "Project A", "Desription of project A", new PlaceProjectOwner(UserTestHelper.PROJECT_MEMBER_EPIFANIO.getUserId()), new PlaceProjectMembers(null));
+        MvcResult mvcResult = performPost(placeProject).andExpect(status().isAccepted()).andReturn();
         assertThat(mvcResult.getResponse().getHeader(HttpHeaders.LOCATION), is("/api/project"));
         String projectId = mvcResult.getResponse().getHeader("projectId");
         assertNotNull(projectId);
@@ -52,8 +50,8 @@ public class ProjectResourceIntegrationTest extends AbstractIntegrationTest {
     @Test
     void project_create_invalid_user() throws Exception {
         // create project
-        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", new ProjectOwnerInfo("zz120198"), new ProjectMembersInfo(null));
-        MvcResult mvcResult = performPost(projectInfo).andExpect(status().isAccepted()).andReturn();
+        PlaceProject placeProject = new PlaceProject(null, "Project A", "Desription of project A", new PlaceProjectOwner("zz120198"), new PlaceProjectMembers(null));
+        MvcResult mvcResult = performPost(placeProject).andExpect(status().isAccepted()).andReturn();
         assertThat(mvcResult.getResponse().getHeader(HttpHeaders.LOCATION), is("/api/project"));
         String projectId = mvcResult.getResponse().getHeader("projectId");
         assertNotNull(projectId);
@@ -64,8 +62,8 @@ public class ProjectResourceIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void project_change_project_owner_valid() throws Exception {
-        ProjectInfo projectInfo = new ProjectInfo(null, "Project A", "Desription of project A", new ProjectOwnerInfo(UserTestHelper.PROJECT_LEADER.getUserId()), new ProjectMembersInfo(null));
-        MvcResult mvcResult = performPost(projectInfo).andExpect(status().isAccepted()).andReturn();
+        PlaceProject placeProject = new PlaceProject(null, "Project A", "Desription of project A", new PlaceProjectOwner(UserTestHelper.PROJECT_LEADER.getUserId()), new PlaceProjectMembers(null));
+        MvcResult mvcResult = performPost(placeProject).andExpect(status().isAccepted()).andReturn();
         assertThat(mvcResult.getResponse().getHeader(HttpHeaders.LOCATION), is("/api/project"));
         String projectId = mvcResult.getResponse().getHeader("projectId");
         assertNotNull(projectId);
@@ -91,10 +89,10 @@ public class ProjectResourceIntegrationTest extends AbstractIntegrationTest {
 
     }
 
-    private ResultActions performPost(ProjectInfo projectInfo) throws Exception {
+    private ResultActions performPost(PlaceProject placeProject) throws Exception {
         return mockMvc.perform(MockMvcRequestBuilders.post("/api/project").
                 contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString(projectInfo)));
+                .content(objectMapper.writeValueAsString(placeProject)));
     }
 
     private ResultActions performGet(String projectId) throws Exception {

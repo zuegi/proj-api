@@ -9,10 +9,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProjectInfo {
+public class PlaceProject {
     private String projectId;
     private String name;
     private String description;
-    private ProjectOwnerInfo projectOwnerInfo;
-    private ProjectMembersInfo projectMembersInfo;
+    private PlaceProjectOwner projectOwnerInfo;
+    private PlaceProjectMembers placeProjectMembers;
 }

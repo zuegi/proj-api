@@ -1,9 +1,9 @@
 package ch.wesr.projectz.projapi.feature.project.infrastructure.event;
 
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.action.*;
 import ch.wesr.projectz.projapi.feature.project.service.ProjectApplicationService;
 import ch.wesr.projectz.projapi.feature.project.service.ProjectCommandService;
 import ch.wesr.projectz.projapi.feature.user.service.UserService;
-import ch.wesr.projectz.projapi.shared.eventbus.ProjectEventStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
@@ -31,15 +31,15 @@ public class ProjectEventListener {
         log.info("Consuming Event: {}", projectPlaced);
         // looking for a user like rw170669 then publish accept Project
         // look for userid und dann muss der User irgenwie in das Object rein, denn zum schluss schreiben wir das Object in den Store
-        log.info("Looking for user with userId: {}", projectPlaced.getProjectInfo().getProjectOwnerInfo().getUserId());
-        userService.publishUserById(projectPlaced.getProjectInfo().getProjectId(), projectPlaced.getProjectInfo().getProjectOwnerInfo().getUserId());
+        log.info("Looking for user with userId: {}", projectPlaced.getPlaceProject().getProjectOwnerInfo().getUserId());
+        userService.publishUserById(projectPlaced.getPlaceProject().getProjectId(), projectPlaced.getPlaceProject().getProjectOwnerInfo().getUserId());
     }
 
     @EventListener
     public void handleProjectAccepted(ProjectAccepted projectAccepted) {
         log.info("Consuming Event: {}", projectAccepted);
         projectEventStore.apply(projectAccepted);
-        commandService.createProject(projectAccepted.getProjectCreation().getProjectInfo().getProjectId());
+        commandService.createProject(projectAccepted.getProjectLifecycle().getPlaceProject().getProjectId());
     }
 
     @EventListener
@@ -59,7 +59,7 @@ public class ProjectEventListener {
     public void handleProjectOwnerChangePlaced(ProjectOwnerChangePlaced projectOwnerChangeAccepted) {
         log.info("Consuming Event: {}", projectOwnerChangeAccepted);
         log.info("Looking for user with userId: {}", projectOwnerChangeAccepted.getProjectOwnerId());
-        userService.publishChangeProjectOwnerById(projectOwnerChangeAccepted.projectCreation.getProjectInfo().getProjectId(), projectOwnerChangeAccepted.getProjectOwnerId());
+        userService.publishChangeProjectOwnerById(projectOwnerChangeAccepted.getProjectLifecycle().getPlaceProject().getProjectId(), projectOwnerChangeAccepted.getProjectOwnerId());
     }
 
     @EventListener
@@ -67,6 +67,7 @@ public class ProjectEventListener {
         log.info("Consuming Event: {}", projectOwnerChangeCreated);
         projectEventStore.applyChangeProjectOwner(projectOwnerChangeCreated);
         projectApplicationService.saveProject(projectOwnerChangeCreated);
+
     }
 
 }

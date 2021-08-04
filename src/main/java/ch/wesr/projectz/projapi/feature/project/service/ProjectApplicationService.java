@@ -4,9 +4,9 @@ package ch.wesr.projectz.projapi.feature.project.service;
 import ch.wesr.projectz.projapi.feature.project.domain.Project;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectId;
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectRepository;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectCreated;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectOwnerChangeCreated;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.ProjectInfo;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.action.ProjectCreated;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.action.ProjectOwnerChangeCreated;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.PlaceProject;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,15 +28,15 @@ public class ProjectApplicationService {
 
 
     public void createProject(ProjectCreated projectCreated) {
-        ProjectInfo pinfo = projectCreated.getProjectCreation().getProjectInfo();
-        Project project = Project.create(new ProjectId(pinfo.getProjectId()), pinfo.getName(), pinfo.getDescription(), projectCreated.getProjectCreation().getUser(), null);
+        PlaceProject pinfo = projectCreated.getProjectLifecycle().getPlaceProject();
+        Project project = Project.create(new ProjectId(pinfo.getProjectId()), pinfo.getName(), pinfo.getDescription(), projectCreated.getProjectLifecycle().getUser(), null);
         repository.add(project);
     }
 
     public void saveProject(ProjectOwnerChangeCreated projectOwnerChangeCreated) {
-        ProjectId projectId = new ProjectId(projectOwnerChangeCreated.getProjectCreation().getProjectInfo().getProjectId());
+        ProjectId projectId = new ProjectId(projectOwnerChangeCreated.getProjectLifecycle().getPlaceProject().getProjectId());
         Project project = repository.findLatestByProjectId(projectId);
-        Project changedProject = project.changeProjectOwner(projectOwnerChangeCreated.getProjectCreation().getUser());
+        Project changedProject = project.changeProjectOwner(projectOwnerChangeCreated.getProjectLifecycle().getUser());
         repository.persist(project); // because changeProjectOwner changes project as well
         repository.add(changedProject);
     }

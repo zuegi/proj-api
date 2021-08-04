@@ -1,7 +1,7 @@
 package ch.wesr.projectz.projapi.feature.project.infrastructure.rest;
 
 import ch.wesr.projectz.projapi.feature.project.domain.ProjectId;
-import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.ProjectInfo;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.command.PlaceProject;
 import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.query.ProjectOwnerUi;
 import ch.wesr.projectz.projapi.feature.project.infrastructure.rest.query.ProjectUI;
 import ch.wesr.projectz.projapi.feature.project.service.ProjectCommandService;
@@ -26,12 +26,12 @@ public class ProjectResource {
     ProjectQueryService queryService;
 
     @PostMapping
-    public ResponseEntity placeProject(@RequestBody ProjectInfo projectInfo) {
+    public ResponseEntity placeProject(@RequestBody PlaceProject placeProject) {
 
         ProjectId projectId = ProjectId.generate();
 
-        projectInfo.setProjectId(projectId.getId());
-        commandService.placeProject(projectInfo);
+        placeProject.setProjectId(projectId.getId());
+        commandService.placeProject(placeProject);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set(HttpHeaders.LOCATION, "/api/project");
         responseHeaders.set("projectId", projectId.getId());

@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProjectOwnerInfo {
-    String userId;
+public class PlaceProjectMembers {
+    List<String> userIdList;
 }

@@ -1,7 +1,7 @@
 package ch.wesr.projectz.projapi.feature.user.infrastructure.event;
 
 import ch.wesr.projectz.projapi.feature.project.service.ProjectCommandService;
-import ch.wesr.projectz.projapi.shared.eventbus.ProjectEventStore;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectEventStore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;

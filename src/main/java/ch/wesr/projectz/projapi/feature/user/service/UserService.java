@@ -6,7 +6,7 @@ import ch.wesr.projectz.projapi.feature.user.infrastructure.event.ChangeProjectO
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserFound;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserNotFound;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.repository.InMemoryUserRepository;
-import ch.wesr.projectz.projapi.shared.eventbus.ProjectEventPublisher;
+import ch.wesr.projectz.projapi.feature.project.infrastructure.event.ProjectEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
