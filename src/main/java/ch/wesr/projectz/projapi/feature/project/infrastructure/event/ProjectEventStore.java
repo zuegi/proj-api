@@ -4,12 +4,14 @@ package ch.wesr.projectz.projapi.feature.project.infrastructure.event;
 import ch.wesr.projectz.projapi.feature.project.infrastructure.event.action.*;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.ChangeProjectOwnerFound;
 import ch.wesr.projectz.projapi.feature.user.infrastructure.event.UserFound;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
+@Slf4j
 @Component
 public class ProjectEventStore {
     private Map<String, ProjectLifecycle> projectStore = new ConcurrentHashMap<>();
@@ -31,6 +33,8 @@ public class ProjectEventStore {
         final ProjectLifecycle projectLifecycle = projectStore.get(projectId);
         if (projectLifecycle != null)
             consumer.accept(projectLifecycle);
+
+        log.info("Status of project with projectId: {} has changed to: {}", projectId, projectLifecycle.getState() );
     }
 
     public void applyUser(UserFound userFound) {
